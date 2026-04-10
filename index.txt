@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Professional Portfolio</title>
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
+    }
+
+    :root{
+      --bg-dark:#0f172a;
+      --bg-dark-2:#020617;
+      --card-bg:rgba(30, 41, 59, 0.85);
+      --primary:#3b82f6;
+      --secondary:#38bdf8;
+      --text-light:#e2e8f0;
+      --text-muted:#94a3b8;
+      --white:#ffffff;
+      --border:rgba(255,255,255,0.08);
+      --shadow:0 10px 30px rgba(0,0,0,0.30);
+    }
+
+    body{
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark), #1e293b, var(--bg-dark-2));
+      color: var(--text-light);
+      line-height:1.6;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    .container{
+      width:90%;
+      max-width:1100px;
+      margin:auto;
+    }
+
+    nav{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(15, 23, 42, 0.85);
+      backdrop-filter:blur(12px);
+      box-shadow:0 4px 20px rgba(0,0,0,0.35);
+      border-bottom:1px solid var(--border);
+    }
+
+    nav .container{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:18px 0;
+    }
+
+    .logo{
+      font-size:24px;
+      font-weight:bold;
+      color:var(--secondary);
+      animation:slideLeft 1s ease;
+    }
+
+    .menu a{
+      margin-left:20px;
+      color:var(--white);
+      font-size:15px;
+      transition:0.3s;
+    }
+
+    .menu a:hover{
+      color:var(--secondary);
+    }
+
+    .hero{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      padding:60px 0;
+      overflow:hidden;
+      background:linear-gradient(135deg, var(--bg-dark), #1e293b, var(--bg-dark-2));
+    }
+
+    .hero .container{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:40px;
+      flex-wrap:wrap;
+    }
+
+    .hero-text{
+      flex:1;
+      min-width:280px;
+      animation:fadeUp 1.2s ease;
+    }
+
+    .hero-text h1{
+      font-size:52px;
+      margin-bottom:15px;
+      color:var(--white);
+    }
+
+    .hero-text h2{
+      font-size:24px;
+      color:var(--secondary);
+      margin-bottom:15px;
+      animation:blinkText 2s infinite;
+    }
+
+    .hero-text p{
+      font-size:17px;
+      margin-bottom:25px;
+      max-width:550px;
+      color:var(--text-muted);
+    }
+
+    .btn{
+      display:inline-block;
+      background:linear-gradient(135deg, var(--primary), var(--secondary));
+      color:var(--white);
+      padding:12px 24px;
+      border-radius:10px;
+      margin-right:10px;
+      font-weight:bold;
+      transition:0.35s;
+      box-shadow:0 8px 20px rgba(59,130,246,0.35);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .btn:hover{
+      transform:translateY(-4px) scale(1.05);
+      box-shadow:0 12px 30px rgba(59,130,246,0.55);
+    }
+
+    .btn::after{
+      content:"";
+      position:absolute;
+      top:0;
+      left:-100%;
+      width:100%;
+      height:100%;
+      background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+      transition:0.6s;
+    }
+
+    .btn:hover::after{
+      left:100%;
+    }
+
+    .btn-outline{
+      background:transparent;
+      color:var(--secondary);
+      border:2px solid var(--secondary);
+      box-shadow:none;
+    }
+
+    .btn-outline:hover{
+      background:var(--secondary);
+      color:var(--bg-dark);
+    }
+
+    .hero-image{
+      flex:1;
+      min-width:280px;
+      text-align:center;
+      animation:zoomIn 1.4s ease;
+    }
+
+    .hero-image img{
+      width:320px;
+      max-width:100%;
+      border-radius:50%;
+      border:5px solid var(--secondary);
+      box-shadow:0 0 35px rgba(56,189,248,0.45);
+      animation:floatImage 3s ease-in-out infinite;
+      object-fit:cover;
+      aspect-ratio:1/1;
+    }
+
+    section{
+      padding:80px 0;
+    }
+
+    .section-title{
+      text-align:center;
+      font-size:34px;
+      margin-bottom:40px;
+      color:var(--secondary);
+      animation:fadeIn 1s ease;
+    }
+
+    .about-box,
+    .contact-box{
+      background:var(--card-bg);
+      padding:30px;
+      border-radius:18px;
+      box-shadow:var(--shadow);
+      backdrop-filter:blur(10px);
+      border:1px solid var(--border);
+      transition:0.4s;
+    }
+
+    .about-box:hover,
+    .contact-box:hover{
+      transform:translateY(-8px);
+    }
+
+    .skills{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+      gap:20px;
+    }
+
+    .skill-card{
+      background:var(--card-bg);
+      padding:25px;
+      border-radius:16px;
+      text-align:center;
+      font-weight:bold;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      transition:0.4s;
+      animation:fadeUp 1s ease;
+    }
+
+    .skill-card:hover{
+      transform:translateY(-8px) scale(1.05);
+      background:linear-gradient(135deg, var(--primary), var(--secondary));
+      color:var(--white);
+    }
+
+    .projects{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      gap:25px;
+    }
+
+    .project-card{
+      background:var(--card-bg);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border);
+      transition:0.4s;
+      animation:fadeUp 1s ease;
+    }
+
+    .project-card:hover{
+      transform:translateY(-10px) scale(1.02);
+    }
+
+    .project-card img{
+      width:100%;
+      height:200px;
+      object-fit:cover;
+      transition:0.4s;
+    }
+
+    .project-card:hover img{
+      transform:scale(1.08);
+    }
+
+    .project-content{
+      padding:20px;
+    }
+
+    .project-content h3{
+      margin-bottom:10px;
+      color:var(--secondary);
+    }
+
+    .project-content p{
+      font-size:15px;
+      margin-bottom:15px;
+      color:var(--text-muted);
+    }
+
+    .contact-info p{
+      margin-bottom:12px;
+      font-size:17px;
+      color:var(--text-light);
+    }
+
+    footer{
+      background:rgba(2, 6, 23, 0.95);
+      color:var(--white);
+      text-align:center;
+      padding:20px 0;
+      border-top:1px solid var(--border);
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(40px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+      }
+      to{
+        opacity:1;
+      }
+    }
+
+    @keyframes slideLeft{
+      from{
+        opacity:0;
+        transform:translateX(-40px);
+      }
+      to{
+        opacity:1;
+        transform:translateX(0);
+      }
+    }
+
+    @keyframes zoomIn{
+      from{
+        opacity:0;
+        transform:scale(0.7);
+      }
+      to{
+        opacity:1;
+        transform:scale(1);
+      }
+    }
+
+    @keyframes floatImage{
+      0%{
+        transform:translateY(0);
+      }
+      50%{
+        transform:translateY(-15px);
+      }
+      100%{
+        transform:translateY(0);
+      }
+    }
+
+    @keyframes blinkText{
+      0%,100%{
+        opacity:1;
+      }
+      50%{
+        opacity:0.65;
+      }
+    }
+
+    @media (max-width:768px){
+      .hero-text h1{
+        font-size:38px;
+      }
+
+      .hero-text h2{
+        font-size:20px;
+      }
+
+      .menu{
+        display:none;
+      }
+
+      nav .container{
+        justify-content:center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="logo">My Portfolio</div>
+      <div class="menu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-text">
+        <h1>Huzaifa Yaman</h1>
+        <h2>Video Editor & Motion Artist</h2>
+        <p>
+          To obtain a challenging and growth-oriented position in the field of digital media and marketing where I can utilize my skills in graphic design, motion graphics, video editing, and social media marketing to create impactful visual content and contribute to a brand’s digital success. I aim to combine creativity and strategy to deliver compel
+        </p>
+        <a href="#projects" class="btn">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Contact Me</a>
+      </div>
+      <div class="hero-image">
+        <img src="ppp.jpg" alt="Profile Photo">
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">About Me</h2>
+      <div class="about-box">
+        <p>
+          I am a passionate Video Editor & Motion Artist who creates engaging and high-quality visual content for social media. I specialize in video editing, motion graphics, and cinematic storytelling using Adobe Premiere Pro and After Effects.
+<br>  <br>
+I focus on delivering clean, professional, and eye-catching videos that help brands grow and connect with their audience. I am dedicated to maintaining quality, meeting deadlines, and continuously improving my creative skills.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+  <div class="container">
+    
+    <h2 class="section-title">Education</h2>
+
+    <div class="about-box">
+      <h3>Higher Secondary Certificate (HSC)</h3>
+      <p><b>Institution:</b> madaripur govt. collage </p>
+      <p><b>Passing Year:</b> 2023</p>
+      <p><b>Result:</b> GPA 3.06</p>
+    </div>
+
+  </div>
+</section>
+
+
+  <section id="skills">
+    <div class="container">
+      <h2 class="section-title">My Skills</h2>
+      <div class="skills">
+        <div class="skill-card">Video Editing Adobe Premiere Pro</div>
+        <div class="skill-card">Motion Graphics</div>
+        <div class="skill-card">Audio Syncing & Noise Reduction</div>
+        <div class="skill-card">, Fast turnaround with tight deadlines</div>
+        <div class="skill-card">trong communication & teamwork</div>
+        <div class="skill-card">Adobe Illustrator</div>
+
+		<div class="skill-card">English lannguage  </div>
+       			 <div class="skill-card">Bangla language  </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="container">
+      <h2 class="section-title">My Projects</h2>
+      <div class="projects">
+
+        <div class="project-card">
+          <img src="project1.jpg" alt="Project 1">
+          <div class="project-content">
+            <h3> Project One</h3>
+            <p> <h3><b>Promotional Video Editing for Social Media.</b></h3>dited social media promotional videos with smooth transitions, color grading, and engaging visual effects to enhance audience reach.  <a href="#" class="btn">Live Demo</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="project2.jpg" alt="Project 2">
+          <div class="project-content">
+            <h3>Project Two</h3>
+            <p><h2><b>Cinematic Travel Video Editing </b></h2>     <br> Created a cinematic travel video using professional editing techniques to deliver a visually appealing and storytelling-based experience. Focused on smooth transitions, color grading, beat sync, and dynamic cuts to enhance viewer engagement.  </p>
+            <a href="#" class="btn">Live Demo</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <img src="project3.jpg" alt="Project 3">
+          <div class="project-content">
+            <h3>Project Three</h3>
+            <p> <h2> <b>Motion Graphics & Logo Animation.   </b>  </h2>  <br> Effects. The project focused on smooth animation, creative transitions, and visual storytelling to create a strong brand identity  </p>
+            <a href="#" class="btn">Live Demo</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">Contact Me</h2>
+      <div class="contact-box">
+        <div class="contact-info">
+          <p><b>Name:</b>Huzaifa Yaman </p>
+          <p><b>Email:</b>mdhuzaifayaman@gmail.com</p>
+          <p><b>Phone:</b> 01783-143514</p>
+          <p><b>Address:</b>Avenue 1, Plot 1, Block D, Mirpur 2, Dhaka, Bangladesh</p>
+          <p><b>Facebook:</b> facebook.com/yourprofile</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Huzaifa Yaman | All Rights Reserved</p>
+  </footer>
+
+</body>
+</html>
